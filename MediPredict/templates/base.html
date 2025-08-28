@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}MediPredict AI{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body class="container">
+  <header class="topbar">
+    <div class="brand">🩺 MediPredict AI</div>
+    <nav>
+      {% if session.get('username') %}
+        <span class="muted">Hi, {{ session['username'] }}</span>
+        <a class="btn" href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a class="btn" href="{{ url_for('history') }}">History</a>
+        <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a class="btn" href="{{ url_for('signup') }}">Sign Up</a>
+        <a class="btn" href="{{ url_for('login') }}">Login</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash">
+        {% for category, message in messages %}
+          <div class="flash-item {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer muted">
+    <small>Educational use only — not a medical diagnosis.</small>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Sign Up • MediPredict AI{% endblock %}
+{% block content %}
+  <div class="card narrow">
+    <h2>Create Account</h2>
+    <form method="POST" class="grid">
+      <label>Username</label>
+      <input name="username" required>
+
+      <label>Password</label>
+      <input type="password" name="password" required>
+
+      <button class="btn btn-primary">Sign Up</button>
+    </form>
+    <p class="muted">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+  </div>
+{% endblock %}

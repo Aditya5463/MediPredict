@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Home • MediPredict AI{% endblock %}
+{% block content %}
+  <div class="hero card">
+    <h1>Welcome to MediPredict AI</h1>
+    <p>Your personal health risk estimator with friendly guidance.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="{{ url_for('signup') }}">Create Account</a>
+      <a class="btn" href="{{ url_for('login') }}">Login</a>
+    </div>
+  </div>
+{% endblock %}

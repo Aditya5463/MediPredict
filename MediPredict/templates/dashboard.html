@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Dashboard • MediPredict AI{% endblock %}
+{% block content %}
+  <div class="grid-2">
+    <div class="card">
+      <h2>Enter your details</h2>
+      <form method="POST" class="grid" id="pred-form">
+        <label>Gender</label>
+        <select name="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+
+        <label>Age (years)</label>
+        <input type="number" name="age" min="1" required>
+
+        <label>Height (cm)</label>
+        <input type="number" name="height_cm" min="50" max="250" required>
+
+        <label>Weight (kg)</label>
+        <input type="number" name="weight_kg" min="10" max="300" step="0.1" required>
+
+        <div class="inline">
+          <span class="muted">Auto BMI:</span>
+          <span id="bmiBadge" class="pill">–</span>
+        </div>
+
+        <label>Systolic BP (mmHg)</label>
+        <input type="number" name="systolic" min="80" max="260" required>
+
+        <label>Diastolic BP (mmHg)</label>
+        <input type="number" name="diastolic" min="40" max="160" required>
+
+        <label>Fasting Glucose (mg/dL)</label>
+        <input type="number" name="fasting_glucose" min="50" max="300" required>
+
+        <label>Total Cholesterol (mg/dL)</label>
+        <input type="number" name="cholesterol" min="100" max="400" required>
+
+        <label>Smoker</label>
+        <select name="smoker">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+
+        <label>Activity Level</label>
+        <select name="activity">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+
+        <label>Family History of Diabetes</label>
+        <select name="fam_diabetes">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+
+        <button class="btn btn-primary">Predict Risks</button>
+      </form>
+      <p class="muted small">This tool provides educational risk estimates and tips; it’s not a diagnosis.</p>
+    </div>
+
+    <div class="card">
+      <h2>Results</h2>
+      {% if result %}
+        <div class="pill-row">
+          <span class="pill">BMI: <b>{{ result.bmi }}</b></span>
+          <span class="pill {{ result.diabetes.category|lower }}">Diabetes: <b>{{ result.diabetes.category }}</b> ({{ result.diabetes.score }})</span>
+          <span class="pill {{ result.hypertension.category|lower }}">Hypertension: <b>{{ result.hypertension.category }}</b> ({{ result.hypertension.score }})</span>
+          <span class="pill {{ result.heart.category|lower }}">Heart Disease: <b>{{ result.heart.category }}</b> ({{ result.heart.score }})</span>
+        </div>
+
+        <h3>Why we think so</h3>
+        <div class="reasons">
+          <div>
+            <h4>Diabetes</h4>
+            <ul>
+              {% for r in result.diabetes.reasons %}
+                <li>{{ r }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h4>Hypertension</h4>
+            <ul>
+              {% for r in result.hypertension.reasons %}
+                <li>{{ r }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h4>Heart Disease</h4>
+            <ul>
+              {% for r in result.heart.reasons %}
+                <li>{{ r }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <h3>AI Guidance</h3>
+        <pre class="narrative">{{ narrative }}</pre>
+      {% else %}
+        <p class="muted">Fill the form and press <b>Predict Risks</b> to see your results here.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

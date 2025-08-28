@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}History • MediPredict AI{% endblock %}
+{% block content %}
+  <div class="card">
+    <h2>Your Prediction History</h2>
+    {% if records|length == 0 %}
+      <p class="muted">No history yet. Make your first prediction on the <a href="{{ url_for('dashboard') }}">dashboard</a>.</p>
+    {% else %}
+      <div class="table">
+        <div class="t-head">
+          <div>Date</div>
+          <div>Diabetes</div>
+          <div>Hypertension</div>
+          <div>Heart</div>
+          <div>Summary</div>
+        </div>
+        {% for r in records %}
+          <div class="t-row">
+            <div>{{ r.created_at }}</div>
+            <div>{{ r.diabetes }}</div>
+            <div>{{ r.hypertension }}</div>
+            <div>{{ r.heart }}</div>
+            <div class="muted small">
+              BMI {{ r.inputs.get('bmi', '-') }},
+              BP {{ r.inputs.get('systolic','-') }}/{{ r.inputs.get('diastolic','-') }},
+              Glu {{ r.inputs.get('fasting_glucose','-') }},
+              Chol {{ r.inputs.get('cholesterol','-') }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
