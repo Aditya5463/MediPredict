@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "flask-app"
+version = "0.1.0"
+description = "Flask app deployment on Render"
+authors = [
+    { name = "Your Name", email = "you@example.com" }
+]
+dependencies = [
+    "Flask==2.3.2",
+    "Flask-MySQLdb==0.2.0",
+    "numpy==1.26.4",
+    "scikit-learn==1.4.2",
+    "pandas==2.2.2",
+    "joblib==1.4.0",
+    "Werkzeug==2.3.7"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
