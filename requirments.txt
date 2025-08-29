@@ -1,6 +1,4 @@
-flask
-mysql-connector-python
-scikit-learn
-pandas
-numpy
-joblib
+Flask==2.3.2
+Flask-MySQLdb==0.2.0
+numpy==2.0.1
+scikit-learn==1.4.2
